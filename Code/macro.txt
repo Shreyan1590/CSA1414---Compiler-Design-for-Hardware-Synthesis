@@ -1,0 +1,20 @@
+%{
+int nmacro = 0, nheader = 0;
+%}
+
+%%
+^#define.*   { nmacro++; }      /* match #define and rest of line */
+^#include.* { nheader++; }      /* match #include and rest of line */
+.|\n        ;                   /* ignore all other input */
+%%
+
+int yywrap(void) {
+    return 1;
+}
+
+int main() {
+    yylex();
+    printf("Number of macros defined = %d\n", nmacro);
+    printf("Number of header files included = %d\n", nheader);
+    return 0;
+}

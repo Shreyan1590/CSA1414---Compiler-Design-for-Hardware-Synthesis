@@ -1,0 +1,18 @@
+%{
+    #include <stdio.h>
+%}
+
+%%
+[A-Z]+        { printf("%s\n", yytext); }   /* print uppercase words */
+.             ;                             /* ignore everything else */
+%%
+
+int yywrap(void) {
+    return 1;
+}
+
+int main(void) {
+    printf("Enter the input string:\n");
+    yylex();
+    return 0;
+}

@@ -1,0 +1,29 @@
+%{
+    #include <stdio.h>
+    #include <string.h>
+
+    int count = 0;
+    char target[50] = "hello";   // word to search
+%}
+
+%%
+[A-Za-z]+   {
+                if(strcmp(yytext, target) == 0) {
+                    count++;
+                }
+            }
+
+[ \t\n]+    ;   /* ignore whitespace */
+.           ;   /* ignore other characters */
+%%
+
+int yywrap(void) {
+    return 1;
+}
+
+int main(void) {
+    printf("Enter a sentence:\n");
+    yylex();
+    printf("Frequency of word \"%s\" = %d\n", target, count);
+    return 0;
+}
